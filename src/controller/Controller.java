@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Controller implements Initializable {
 
@@ -64,14 +66,25 @@ public class Controller implements Initializable {
     public void addToCart(){
         String code =codeInput.getText();
         List<String[]> items = reader.getItems();
+        AtomicBoolean exists = new AtomicBoolean(false);
         items.forEach(a->{
             if(a[0].equals(code)){
-                printItem(a);
-                cartItems.add(a);
-                totalSum+= Double.parseDouble(a[3]);
-            }
 
+                exists.set(true);
+                int stock = Integer.parseInt(a[4]);// count stock
+                if(stock > 0) {
+                    a[4] = String.valueOf(stock-1);
+                    printItem(a);
+                    cartItems.add(a);//add to cart list
+                    totalSum+= Double.parseDouble(a[3]);// count total sum
+                }else{
+                    new Alert(Alert.AlertType.WARNING, "No items left!").showAndWait();
+                }
+            }
         });
+        if(exists.get()==false)new Alert(Alert.AlertType.WARNING, "No items exists!").showAndWait();
+
+
         updateSum();
 
 
