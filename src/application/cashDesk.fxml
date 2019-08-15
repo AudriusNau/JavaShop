@@ -18,9 +18,11 @@
                         <Button layoutX="126.0" layoutY="76.0" mnemonicParsing="false" onMouseClicked="#addToCart" text="Add" />
                         <Label layoutX="280.0" layoutY="36.0" prefHeight="21.0" prefWidth="40.0" text="item" />
                         <TextField fx:id="totalSumField" layoutX="399.0" layoutY="316.0" />
-                        <Label layoutX="274.0" layoutY="321.0" prefHeight="21.0" prefWidth="115.0" text="Total amount" />
+                        <Label layoutX="274.0" layoutY="321.0" prefHeight="21.0" prefWidth="115.0" text="Total price" />
                         <Label layoutX="327.0" layoutY="36.0" prefHeight="21.0" prefWidth="62.0" text="group" />
                         <Label layoutX="409.0" layoutY="36.0" prefHeight="21.0" prefWidth="62.0" text="price" />
+                        <Button layoutX="191.0" layoutY="76.0" mnemonicParsing="false" onMouseClicked="#removeFromCart" text="Remove" />
+                        <Label layoutX="475.0" layoutY="36.0" text="amount" />
                      </children></AnchorPane>
             </content>
           </Tab>

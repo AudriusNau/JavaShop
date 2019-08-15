@@ -26,7 +26,7 @@ public class Controller implements Initializable {
     public TextArea cashDeskArea;
     public TextArea itemArea;
     public TextField codeInput;
-    private List<String[]> cartItems;
+    private List<String[]> cartList;
     DbStrategy reader;
     @FXML
      ChoiceBox dbMode;
@@ -40,7 +40,7 @@ public class Controller implements Initializable {
         dbMode.setItems(loadMode);
         dbMode.setValue("txt");
         totalSum = 0;
-        this.cartItems = new ArrayList<>();
+        this.cartList = new ArrayList<>();
         reader = new TextDb() {};
         reader.load();
         List<String []> data = ((TextDb) reader).getItems();
@@ -66,40 +66,78 @@ public class Controller implements Initializable {
     public void addToCart(){
         String code =codeInput.getText();
         List<String[]> items = reader.getItems();
+
         AtomicBoolean exists = new AtomicBoolean(false);
         items.forEach(a->{
             if(a[0].equals(code)){
 
                 exists.set(true);
-                int stock = Integer.parseInt(a[4]);// count stock
-                if(stock > 0) {
-                    a[4] = String.valueOf(stock-1);
-                    printItem(a);
-                    cartItems.add(a);//add to cart list
+                int itemsStock = Integer.parseInt(a[4]);// count stock
+                if(itemsStock > 0) {
+                    a[4] = String.valueOf(itemsStock-1);
+
+                    addItemToCartList(a);//add to cart list
                     totalSum+= Double.parseDouble(a[3]);// count total sum
                 }else{
                     new Alert(Alert.AlertType.WARNING, "No items left!").showAndWait();
                 }
             }
         });
-        if(exists.get()==false)new Alert(Alert.AlertType.WARNING, "No items exists!").showAndWait();
+        if(!exists.get())new Alert(Alert.AlertType.WARNING, "No items exists!").showAndWait();
 
-
+        printItem(cartList);
         updateSum();
 
 
 
+    }
+    public void removeFromCart(){
+        String code =codeInput.getText();
+        AtomicBoolean exists = new AtomicBoolean(false);
+        cartList.forEach(a->{
+            if(a[0].equals(code)){
+                exists.set(true);
+                int stock = Integer.parseInt(a[4])+1;// count stock
+                a[4] = String.valueOf(stock-1);
+                totalSum-= Double.parseDouble(a[3]);// count total sum
+
+            }
+        });
+        if(!exists.get())new Alert(Alert.AlertType.WARNING, "No items exists!").showAndWait();
+        printItem(cartList);
+        updateSum();
+    }
+    public void addItemToCartList(String[] item){
+        AtomicBoolean exists = new AtomicBoolean(false);
+        this.cartList.forEach(a->{
+            if(a[0].equals(item[0])){
+                exists.set(true);
+                int stock = Integer.parseInt(a[4])+1;// count stock
+                a[4]=(String.valueOf(stock));
+            }
+        });
+        if(!exists.get()){
+            item[4]="1";
+            cartList.add(item);
+        }
+        updateSum();
     }
     public void printAllItems(List<String []> data){
         for (String [] s : data){
             itemArea.appendText(s[0]+" " +s[1]+" "+ s[2]+" "+ s[3]+" "+ s[4]+"\n");
         }
     }
-    public void printItem(String[] s){
-        cashDeskArea.appendText(" " +s[1]+"   "+ s[2]+"          "+ s[3]+" "+"\n");
+    public void printItem(List<String[]> list){
+        String toWrite="";
+        for(String[] s: list){
+            toWrite+= (" " +s[1]+"   "+ s[2]+"          "+ s[3]+"     "+s[4]+"\n");
+        }
+        cashDeskArea.setText(toWrite);
     }
     public void updateSum(){
         totalSumField.setText(Double.toString(this.totalSum));
     }
+
+
 
 }
