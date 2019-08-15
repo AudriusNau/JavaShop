@@ -9,6 +9,8 @@ import java.util.List;
 public interface DbStrategy<E> {
 	void load() ;
 	void save();
+	List<String[]> getItems();
+	void setItems(List<String[]> items);
 
 
 }

@@ -13,8 +13,7 @@ public class TextDb<E> implements DbStrategy<E> {
 
     public TextDb() {
         this.file = "src//testdata//item.txt";
-        this.items = new ArrayList<String[]>() {
-        };
+        this.items = new ArrayList<String[]>();
 
 
     }

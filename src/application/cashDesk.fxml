@@ -13,10 +13,14 @@
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <TextArea fx:id="cashDeskArea" layoutX="266.0" layoutY="59.0" prefHeight="241.0" prefWidth="320.0" />
-                        <TextField layoutX="126.0" layoutY="31.0" prefHeight="31.0" prefWidth="129.0" />
+                        <TextField fx:id="codeInput" layoutX="126.0" layoutY="31.0" prefHeight="31.0" prefWidth="129.0" />
                         <Label layoutX="32.0" layoutY="20.0" prefHeight="44.0" prefWidth="76.0" text="Item code" />
-                        <Button layoutX="126.0" layoutY="76.0" mnemonicParsing="false" text="Add" />
-                        <Label layoutX="273.0" layoutY="31.0" prefHeight="21.0" prefWidth="110.0" text="Cash Desk" />
+                        <Button layoutX="126.0" layoutY="76.0" mnemonicParsing="false" onMouseClicked="#addToCart" text="Add" />
+                        <Label layoutX="280.0" layoutY="36.0" prefHeight="21.0" prefWidth="40.0" text="item" />
+                        <TextField fx:id="totalSumField" layoutX="399.0" layoutY="316.0" />
+                        <Label layoutX="274.0" layoutY="321.0" prefHeight="21.0" prefWidth="115.0" text="Total amount" />
+                        <Label layoutX="327.0" layoutY="36.0" prefHeight="21.0" prefWidth="62.0" text="group" />
+                        <Label layoutX="409.0" layoutY="36.0" prefHeight="21.0" prefWidth="62.0" text="price" />
                      </children></AnchorPane>
             </content>
           </Tab>

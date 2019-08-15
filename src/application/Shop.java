@@ -5,7 +5,11 @@ import db.ExcelDb;
 import db.TextDb;
 import javafx.scene.control.TextArea;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
+import java.util.Properties;
 
 public class Shop {
 
@@ -19,13 +23,25 @@ public class Shop {
        /* xlsReader.load();
         List<String []> data = ((ExcelDb) xlsReader).getItems();
          xlsReader.save();*/
-        for (String [] s : data){
-            itemArea.appendText(s[0]+" " +s[1]+" "+ s[2]+" "+ s[3]+" "+ s[4]+"\n");
-        }
+
     }
     public void addToCart(int id){
 
 
     }
+    public void loadData(){
+        String loadMode="";
+        try{
+            InputStream input = new FileInputStream("src//evaluation.properties");
+            Properties prop = new Properties();
+            prop.load(input);
+            loadMode=prop.getProperty("load.mode");
+            input.close();
+        }catch (IOException e){
+            System.out.println(e.getMessage());
+            e.printStackTrace();  }
 
+    }
 }
+
+
